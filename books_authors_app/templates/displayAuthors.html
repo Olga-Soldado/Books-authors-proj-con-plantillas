@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Authors</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/displayAuthors.css'%}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>{{author.first_name}} {{author.last_name}}</h1>
+        <h3>ID: {{author.id}}</h3>
+        <h3 class="d-inline-block">Notes:</h3>
+        <p class="d-inline-block">{{author.notes}}</p>
+        <h3>Books:</h3>
+        <ul>
+            {% for book in author.books.all %}
+            <li>{{book.title}}</li>
+            {% endfor %}
+        </ul>
+        <form action="/authors/{{author.id}}/add_book" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="selectWrapper">
+                    <select name="book-to-add" class="selectBox">
+                        {% for book in all_books %}
+                        <option value="{{book.id}}">{{book.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="button">Add</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

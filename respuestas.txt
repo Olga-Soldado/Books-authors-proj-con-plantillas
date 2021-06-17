@@ -1,0 +1,63 @@
+python manage.py makemigrations 
+python manage.py migrate
+python manage.py shell -i ipython
+from books_authors_app.models import *
+
+Book.objects.create(title="C Sharp",desc="Es un lenguaje de programación multiparadigma desarrollado y estandarizado por la empresa Microsoft como parte de su plataforma .NET, que después fue aprobado como un estándar por la ECMA e ISO. C# es uno de los lenguajes de programación diseñados para la infraestructura de lenguaje común.")
+Book.objects.create(title="Java",desc="La plataforma Java es el nombre de un entorno o plataforma de computación originaria de Sun Microsystems, capaz de ejecutar aplicaciones desarrolladas usando el lenguaje de programación Java u otros lenguajes que compilen a bytecode y un conjunto de herramientas de desarrollo.")
+Book.objects.create(title="Python",desc="Python es un lenguaje de programación interpretado cuya filosofía hace hincapié en la legibilidad de su código.​ Se trata de un lenguaje de programación multiparadigma, ya que soporta parcialmente la orientación a objetos, programación imperativa y, en menor medida, programación funcional.")
+Book.objects.create(title="PHP",desc="NPHP es un lenguaje de programación de uso general que se adapta especialmente al desarrollo web.​ Fue creado inicialmente por el programador danés-canadiense Rasmus Lerdorf en 1994.​ En la actualidad, la implementación de referencia de PHP es producida por The PHP Group.​")
+Book.objects.create(title="Ruby",desc="Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro Matz Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995.")
+
+Author.objects.create(first_name="Jane", last_name="Austen")
+Author.objects.create(first_name="Emily", last_name="Dickinson")
+Author.objects.create(first_name="Fyodor", last_name="Dostoevsky")
+Author.objects.create(first_name="William", last_name="Shakespeare")
+Author.objects.create(first_name="Lau", last_name="Tzu")
+
+exit
+
+python manage.py makemigrations 
+python manage.py migrate
+python manage.py shell -i ipython
+from books_authors_app.models import *
+
+csharp = Book.objects.get(title="C Sharp")
+csharp.title = "C#"
+csharp.save()
+
+Bill = Author.objects.get(id=4)
+Bill.first_name = "Bill"
+Bill.save()
+
+primer_autor = Author.objects.get(id=1)
+primer_autor.books.add(Book.objects.get(id=1))
+primer_autor.books.add(Book.objects.get(id=2))
+
+segundo_autor = Author.objects.get(id=2)
+segundo_autor.books.add(Book.objects.get(id=1))
+segundo_autor.books.add(Book.objects.get(id=2))
+segundo_autor.books.add(Book.objects.get(id=3))
+
+tercer_autor = Author.objects.get(id=3)
+tercer_autor.books.add(Book.objects.get(id=1))
+tercer_autor.books.add(Book.objects.get(id=2))
+tercer_autor.books.add(Book.objects.get(id=3))
+tercer_autor.books.add(Book.objects.get(id=4))
+
+cuarto_autor = Author.objects.get(id=4)
+cuarto_autor.books.add(Book.objects.get(id=1))
+cuarto_autor.books.add(Book.objects.get(id=2))
+cuarto_autor.books.add(Book.objects.get(id=3))
+cuarto_autor.books.add(Book.objects.get(id=4))
+cuarto_autor.books.add(Book.objects.get(id=5))
+
+Book.objects.get(id=3).author.all().values()
+
+Book.objects.get(id=3).author.remove(Book.objects.get(id=3).author.first())
+
+Book.objects.get(id=2).author.add(Author.objects.get(id=5))
+
+Author.objects.get(id=3).books.all().values()
+
+Book.objects.get(id=5).author.all().values()

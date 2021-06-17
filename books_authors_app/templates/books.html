@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/book.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container d-flex justify-content-between">
+        <div class="book-form">
+            <form action="/process_book" method="POST">
+                {% csrf_token %}
+                <h1>Add a Book</h1>
+                <div class="form-group">
+                    <label for="book-title">Title</label>
+                    <input type="text" name="book-title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="book-description">Description</label>
+                    <textarea name="book-description" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="button">Add</button>
+            </form>
+        </div>
+        <div class="books-list">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in all_books %}
+                    <tr>
+                        <th>{{book.id}}</th>
+                        <th>{{book.title}}</th>
+                        <th><a href="/books/{{book.id}}">View</a></th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
